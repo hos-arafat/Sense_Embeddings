@@ -64,7 +64,7 @@ class Pocessor:
             flag = True
             for event, elem in ET.iterparse(parent, events=("start", "end")):
                 # print(c)
-                c +=1
+
                 if event == 'start' :
                     # print("This current element is", elem)
 
@@ -81,6 +81,7 @@ class Pocessor:
                             with open (self.processed_pth, "a", encoding="utf8") as f:
                                 f.write(elem.text)
                                 f.write("\n")
+                                c +=1
                             f.close()
                             # print("Value of 'text' tag is %s" % elem.text.encode('utf-8'))
                             # print(elem.text.encode('utf-8'))
@@ -122,6 +123,7 @@ class Pocessor:
             # print(l[3])
             # print(l[4])
             # print(l[5])
+            print("Number of sentences I wrote in th file is ", c)
             print("Length of list of parsed sentences is ", len(l))
 
 
