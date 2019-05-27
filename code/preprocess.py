@@ -68,8 +68,8 @@ class Pocessor:
                 if event == 'start' :
                     # print("This current element is", elem)
 
-                    # if elem.tag == 'sentence' :
-                    #     print(elem.get("id"))
+                    if elem.tag == 'sentence' :
+                         print(elem.get("id"))
                         # d = {}
                     if elem.tag == 'text' and elem.text != None:
                         # print(elem.get("lang"))
@@ -133,6 +133,7 @@ class Pocessor:
 
         with open(self.dict_pth, 'rb') as handle:
             annotations_l = pickle.load(handle)
+            print("Expected lengths of text file", len(annotations_l))
             # print(annotations_l)
         print("Done Loading the list of dictionaries!")
 
