@@ -88,17 +88,22 @@ class Pocessor:
                             # print(list(elem.text))
 
                     if elem.tag == 'annotation' and elem.get("lang") == "en":
+                        if elem.text == None:
+                            if flag == True:
+                                l.append(None)
+                                flag = False
                         # print(elem.get("anchor"))
                         # print(elem.get("lemma"))
                         # print(elem.text)
-                        label = elem.get("lemma") + "_" + elem.text
-                        # print(label)
-                        # key = elem.get("anchor")
-                        d.update({elem.get("anchor"): (elem.get("lemma") + "_" + elem.text)})
-                        # print("Dictionary of 'root':'annotation for each sentence is'", d)
-                        if flag == True:
-                            l.append(d)
-                            flag = False
+                        else:
+                            label = elem.get("lemma") + "_" + elem.text
+                            # print(label)
+                            # key = elem.get("anchor")
+                            d.update({elem.get("anchor"): (elem.get("lemma") + "_" + elem.text)})
+                            # print("Dictionary of 'root':'annotation for each sentence is'", d)
+                            if flag == True:
+                                l.append(d)
+                                flag = False
                 # if event == 'end':
                 #     print()
                 elem.clear()
@@ -141,15 +146,16 @@ class Pocessor:
         train = []
         for idx, sentence in enumerate(f_content):
             # print("Sentence {} number {}".format(idx, sentence))
-            for key, value in annotations_l[idx].items():
-            # print(sentence)
-            # if key in sentence:
-                # print("Found!", key)
-                # print(sentence.find(key))
-                # print(key)
-                # print(value)
-                sentence = sentence.replace(key, value)
+            if annotations_l[idx] != None:
+                for key, value in annotations_l[idx].items():
                 # print(sentence)
+                # if key in sentence:
+                    # print("Found!", key)
+                    # print(sentence.find(key))
+                    # print(key)
+                    # print(value)
+                    sentence = sentence.replace(key, value)
+            # print(sentence)
 
             sentence = sentence.rstrip()
             train.append([])
