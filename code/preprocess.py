@@ -288,7 +288,7 @@ class Pocessor:
                 word_pairs.append(line.split("\t")[:2])
 
 
-        predictions = [None] * len(ground_truth)
+        predictions = [-1] * len(ground_truth)
         # print("Length of test word pairs", len(word_pairs))
         # print("Length of predictions", len(predictions))
         #
@@ -310,7 +310,7 @@ class Pocessor:
         """ This assumes that each word has MANY Senses / Sense embedding"""
         for p_idx, pair in enumerate(word_pairs):
             # print(pair)
-            # print(pair[0], pair[1])
+            #print(pair[0], pair[1])
             """If the word is in my embeddings vocab"""
             # print("Word 0 found", pair[0] in embeddings_vocab)
             # print("Word 1 found", pair[1] in embeddings_vocab)
@@ -318,6 +318,17 @@ class Pocessor:
             """Find all senses of the word """
             all_senses_1 = [s for s in embeddings_vocab if pair[0]+"_bn" in s]
             all_senses_2 = [s for s in embeddings_vocab if pair[1]+"_bn" in s]
+            #matching_senses = [s for s in all_senses_1 if s.split("_bn:")[0]==pair[0]]
+
+            matching_senses_1 = [s for s in all_senses_1 if s.split("_bn:")[0]==pair[0]]
+            matching_senses_2 = [s for s in all_senses_2 if s.split("_bn:")[0]==pair[1]]
+
+
+            #all_senses_2 = [s for s in embeddings_vocab if pair[1].lower() in s]
+            #print("All senses of word 1", all_senses_1)
+
+            #print("MATCHING senses of word 1", (matching_senses_1))
+            #print("MATCHING senses of word 2", (matching_senses_2))
 
             """The approach below returned 'institiutinal' as a sense for the word 'institution' """
             # all_senses_1 = [s for s in embeddings_vocab if pair[0] in s]
@@ -326,19 +337,21 @@ class Pocessor:
             # print("All senses of word 2", all_senses_2)
             """Loop over all senses of word_1 and word_2 and compute cosine_similarity """
             predictions[p_idx] = -1
-            if all_senses_1 != []:
-                print("Senses for word 1 found at line ", p_idx+2, all_senses_1)
-            if all_senses_2 != []:
-                print("Senses for word 2 found at line ", p_idx+2, all_senses_2)
+            #if all_senses_1 != []:
+                #print("Senses for word 1 found at line ", p_idx+2) #, all_senses_1)
+            #if all_senses_2 != []:
+                #print("Senses for word 2 found at line ", p_idx+2) # , all_senses_2)
             if all_senses_1 != [] and all_senses_2 != []:
-                print("Senses for both words found at line ", p_idx, all_senses_1, all_senses_2)
-                for sense1, sense2 in zip(all_senses_1, all_senses_2):
+                #print("Senses for both words found at line ", p_idx+2) #, all_senses_1, all_senses_2)
+                for sense1, sense2 in zip(matching_senses_1, matching_senses_2):
                     #print((model[sense1]).shape)
                     #print((model[sense2]).shape)
                     #v1 = model[sense1].reshape(1, -1)
                     #v2 = model[sense2].reshape(1, -1)
                     #cosine_similarity(v1, v2)
                     predictions[p_idx] = max(predictions[p_idx], cosine_similarity(model[sense1].reshape(1, -1), model[sense2].reshape(1, -1))[0][0])
+                #print("Cosine similarity between those 2 is ", predictions[p_idx])
+                print(pair[0], " ",  pair[1], " ",  predictions[p_idx])
 
         # print(ground_truth)
         print("My predictions are", predictions)
@@ -348,8 +361,10 @@ class Pocessor:
         # print(word_pairs)
         # print(len(ground_truth))
         #predictions = ground_truth
-        corr, p = spearmanr(predictions, ground_truth)
-        print("Spearman correlation is", corr)
+        corr, p = spearmanr( ground_truth, predictions)
+        corr1, p1 = spearmanr(predictions, ground_truth)
+        print("Spearman correlation (ground truth first) is", corr)
+        print("Spearman correlation (predictions first) is", corr1)
         print("The p-value is", p)
         return
 
