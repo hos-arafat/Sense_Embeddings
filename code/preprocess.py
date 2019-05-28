@@ -62,6 +62,8 @@ class Pocessor:
             # event, root = context.next()
             c = 0
             flag = True
+            expecting_annotation = False
+
             for event, elem in ET.iterparse(parent, events=("start", "end")):
                 # print(c)
 
@@ -75,6 +77,12 @@ class Pocessor:
                         # print(elem.get("lang"))
                         d = {}
                         if elem.get("lang") == "en":
+
+                            if expecting_annotation == True:
+                                l.append(None)
+                            elif expecting_annotation == False:
+                                expecting_annotation = True
+
                             flag = True
                             # print((elem.text))
                             # print(type(elem.text))
@@ -89,6 +97,9 @@ class Pocessor:
                             # print(list(elem.text))
 
                     if elem.tag == 'annotation' and elem.get("lang") == "en":
+                        if expecting_annotation == True:
+                            expecting_annotation = False
+                            
                         if elem.text == None:
                             if flag == True:
                                 l.append(None)
