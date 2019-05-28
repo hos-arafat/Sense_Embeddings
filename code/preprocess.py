@@ -333,19 +333,24 @@ class Pocessor:
             if all_senses_1 != [] and all_senses_2 != []:
                 print("Senses for both words found at line ", p_idx, all_senses_1, all_senses_2)
                 for sense1, sense2 in zip(all_senses_1, all_senses_2):
-                    predictions[p_idx] = max(predictions[p_idx], cosine_similarity(model[sense1], model[sense2])[0][0])
+                    #print((model[sense1]).shape)
+                    #print((model[sense2]).shape)
+                    #v1 = model[sense1].reshape(1, -1)
+                    #v2 = model[sense2].reshape(1, -1)
+                    #cosine_similarity(v1, v2)
+                    predictions[p_idx] = max(predictions[p_idx], cosine_similarity(model[sense1].reshape(1, -1), model[sense2].reshape(1, -1))[0][0])
 
         # print(ground_truth)
-        print(predictions)
+        print("My predictions are", predictions)
         print(len(ground_truth))
         print(len(predictions))
         assert len(predictions) == len(ground_truth)
         # print(word_pairs)
         # print(len(ground_truth))
-        predictions = ground_truth
+        #predictions = ground_truth
         corr, p = spearmanr(predictions, ground_truth)
-        print(corr)
-        print(p)
+        print("Spearman correlation is", corr)
+        print("The p-value is", p)
         return
 
 
