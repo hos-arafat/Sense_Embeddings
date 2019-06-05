@@ -13,7 +13,7 @@
 python preprocess_ES.py [parent_path]
 ```
 where:
-- parent_path: Path to the eurosense.v1.0.high-precision.xml file
+- parent_path: Path to the eurosense.v1.0.high-precision **(.xml)** file
 
 
 ### Train Word2Vec model
@@ -22,7 +22,7 @@ python train.py [embed_fname]
 ```
 where:
 
-- embed_fname: Path where the embeddings (.vec) file will be saved
+- embed_fname: Path where the embeddings **(.vec)** file will be saved
 
 ### Test the model on Word Similarity Dataset
 ```
@@ -30,5 +30,5 @@ python test.py Test [test_f_path] [embed_fname]
 ```
 where:
 
-- test_f_path: Path to a Word Similarity dataset (.tab) file
-- embed_fname: Path to embeddings (.vec) file will to test
+- test_f_path: Path to a Word Similarity dataset **(.tab)** file
+- embed_fname: Path to embeddings **(.vec)** file will to test
