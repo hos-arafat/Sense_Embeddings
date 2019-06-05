@@ -30,5 +30,5 @@ python test.py Test [test_f_path] [embed_fname]
 ```
 where:
 
-- embed_fname: Path to a Word Similarity dataset (.tab) file
+- test_f_path: Path to a Word Similarity dataset (.tab) file
 - embed_fname: Path to embeddings (.vec) file will to test
