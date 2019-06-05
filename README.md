@@ -8,7 +8,7 @@
 - report.pdf         # your report
 ```
 ## Usage Instructions
-### Process the EuroSense Dataset
+### 1. Process the EuroSense Dataset
 ```
 python preprocess_ES.py [parent_path]
 ```
@@ -16,7 +16,7 @@ where:
 - parent_path: Path to the eurosense.v1.0.high-precision **(.xml)** file
 
 
-### Train Word2Vec model
+### 2. Train Word2Vec model
 ```
 python train.py [embed_fname]
 ```
@@ -24,7 +24,7 @@ where:
 
 - embed_fname: Path where the embeddings **(.vec)** file will be saved
 
-### Test the model on Word Similarity Dataset
+### 3. Test the model on Word Similarity Dataset
 ```
 python test.py Test [test_f_path] [embed_fname]
 ```
