@@ -26,9 +26,7 @@ where the **required** arguments are:
 ```
 python test.py -m Test test_f_path [embed_fname]
 ```
-where:
-
-The **required** arguments are:
+where the **required** arguments are:
 - -m / --mode: Wether to "Test" embeddings or to "Plot" some of them
 - "-t" / "--test_f_path": Path to a Word Similarity dataset **(.tab)** file
 
@@ -39,9 +37,7 @@ while the *optional* are:
 ```
 python test.py -m Plot [-e ..\resources\embeddings.vec]
 ```
-where:
-
-The **required** arguments are:
+where the **required** arguments are:
 - -m / --mode: Wether to "Test" embeddings or to "Plot" some of them
 
 while the *optional* are:
